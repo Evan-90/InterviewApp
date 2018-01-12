@@ -1,6 +1,7 @@
 import React from 'react'
 import { List, InputItem, Radio, WingBlank, WhiteSpace, Button } from 'antd-mobile'
 import Logo from "../../component/logo/logo";
+import AuthRoute from "../../component/authRoute/authRoute";
 
 
 class Register extends React.Component{
@@ -18,6 +19,7 @@ class Register extends React.Component{
     const RadioItem = Radio.RadioItem
     return (
       <div>
+        <AuthRoute/>
         <Logo/>
         <h2>注册页面</h2>
         <WingBlank>
