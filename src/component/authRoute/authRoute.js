@@ -29,7 +29,7 @@ class AuthRoute extends React.Component{
     // 用户是否完善信息（选择图像 个人简介）
   }
   render() {
-    return '判断跳转的地方'
+    return null
   }
 }
 export default AuthRoute
