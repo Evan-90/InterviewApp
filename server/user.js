@@ -1,4 +1,5 @@
 const express = require('express')
+const utils = require('utility')
 const Router = express.Router()
 // 读取所有model
 const model = require('./model')
@@ -19,7 +20,7 @@ Router.post('/register', function (req, res) {
       return res.json({code: 1, msg:'用户名已经存在'})
     }
     // 新建用户信息
-    User.create({user, pwd, type}, function (e, d) {
+    User.create({ user, type, pwd: md5Pwd(pwd)}, function (e, d) {
       if(e) {
         return res.json({code: 1, msg: '服务端出错'})
       }
@@ -30,5 +31,8 @@ Router.post('/register', function (req, res) {
 Router.get('/info', function (req, res) {
   return res.json({code: 2})
 })
-
+function md5Pwd(pwd) {
+  const salt = 'Interview_app@#56430!+=ui-6'
+  return utils.md5(utils.md5(pwd+salt))
+}
 module.exports = Router
