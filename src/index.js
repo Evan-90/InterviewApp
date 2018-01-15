@@ -7,9 +7,10 @@ import { BrowserRouter, Route, Redirect, Switch} from 'react-router-dom'
 
 import reducers from './reducer'
 import './config'
-import Login from "./container/login/login";
-import Register from "./container/register/register";
-import AuthRoute from "./component/authRoute/authRoute";
+import Login from "./container/login/login"
+import Register from "./container/register/register"
+import AuthRoute from "./component/authRoute/authRoute"
+import BossInfo from "./container/bossinfo/bossinfo";
 
 const store = createStore(reducers, compose(
   applyMiddleware(thunk),
@@ -23,6 +24,7 @@ ReactDom.render(
         <AuthRoute/>
         <Route path="/login" component={Login} />
         <Route path="/register" component={Register} />
+        <Route path="/bossinfo" component={BossInfo} />
       </div>
     </BrowserRouter>
     </Provider>),
