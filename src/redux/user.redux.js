@@ -73,12 +73,9 @@ export function login({user, pwd}) {
   }
 }
 /** boss完善信息 **/
-export function update({title, company, money, desc, avatar}) {
-  if(!title || !company || !money || !desc || !avatar){
-    return errorMsg('请完善信息')
-  }
+export function update(data) {
   return dispatch =>{
-    axios.post('/user/update', {title, company, money, desc, avatar}).then(res=>{
+    axios.post('/user/update', data).then(res=>{
       if(res.status === 200 && res.data.code === 0){
         dispatch(authSuccess(res.data.data))
       }else {
