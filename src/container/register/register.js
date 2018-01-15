@@ -1,5 +1,6 @@
 import React from 'react'
-import { Toast, List, InputItem, Radio, WingBlank, WhiteSpace, Button } from 'antd-mobile'
+import { List, InputItem, Radio, WingBlank, WhiteSpace, Button } from 'antd-mobile'
+import { Redirect } from 'react-router-dom'
 import Logo from "../../component/logo/logo";
 import AuthRoute from "../../component/authRoute/authRoute";
 import { connect } from 'react-redux'
@@ -30,15 +31,13 @@ class Register extends React.Component{
     })
   }
   handleRegister() {
-    console.log(this.state)
     this.props.register(this.state)
-    // 是否有错误信息（未能注册成功），如果有弹出提示框
-    //this.props.msg? Toast.info(`${this.props.msg}`, 3): null
   }
   render() {
     const RadioItem = Radio.RadioItem
     return (
       <div>
+        {this.props.redirectTo?<Redirect to={this.props.redirectTo} />:null }
         <AuthRoute/>
         <Logo/>
         <h2>注册页面</h2>

@@ -1,9 +1,16 @@
 import axios from 'axios'
+import { getRedirectPath } from "../util/util"
+import {Toast} from 'antd-mobile'
 
 const REGISTER_SUCCESS = 'REGISTER_SUCCESS'
+const LOGIN_SUCCESS = 'LOGIN_SUCCESS'
 const ERROR_MDG = 'ERROR_MDG'
 const initState = {
+  // 页面跳转路径
+  redirectTo: '',
+  // 是否登录
   isAuth: false,
+  // 用户信息
   user: '',
   pwd: '',
   type: ''
@@ -12,7 +19,9 @@ const initState = {
 export function user(state = initState, action) {
   switch (action.type){
     case REGISTER_SUCCESS:
-      return {...state, msg: '', isAuth: true, ...action.payload}
+      return {...state, msg: '', redirectTo: getRedirectPath(action.payload), isAuth: true, ...action.payload}
+    case LOGIN_SUCCESS:
+      return {...state, msg: '', redirectTo: getRedirectPath(action.payload), isAuth: true, ...action.payload}
     case ERROR_MDG:
       return {...state, msg: action.msg, isAuth: false}
     default:
@@ -24,7 +33,12 @@ function registerSuccess(data) {
   return {type: REGISTER_SUCCESS, payload: data}
 }
 function errorMsg(msg) {
+  // 提示错误信息
+  Toast.info(msg, 2)
   return {msg, type: ERROR_MDG}
+}
+function loginSuccess(data) {
+  return {type: LOGIN_SUCCESS, payload: data}
 }
 export function register({user, pwd, repeatpwd, type}) {
   if(!user || !pwd || !type){
@@ -38,7 +52,21 @@ export function register({user, pwd, repeatpwd, type}) {
       if(res.status === 200 && res.data.code === 0){
         dispatch(registerSuccess({user, pwd, type}))
       }else {
-        dispatch(errorMsg(res.date.msg))
+        dispatch(errorMsg(res.data.msg))
+      }
+    })
+  }
+}
+export function login({user, pwd}) {
+  if(!user || !pwd ){
+    return errorMsg('用户名和密码不能为空')
+  }
+  return dispatch =>{
+    axios.post('/user/login', {user, pwd}).then(res=>{
+      if(res.status === 200 && res.data.code === 0){
+        dispatch(loginSuccess(res.data.data))
+      }else {
+        dispatch(errorMsg(res.data.msg))
       }
     })
   }
