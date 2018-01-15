@@ -4,6 +4,7 @@ import {Toast} from 'antd-mobile'
 
 const REGISTER_SUCCESS = 'REGISTER_SUCCESS'
 const LOGIN_SUCCESS = 'LOGIN_SUCCESS'
+const INFO_SUCCESS = 'INFO_SUCCESS'
 const ERROR_MDG = 'ERROR_MDG'
 const initState = {
   // 页面跳转路径
@@ -22,6 +23,8 @@ export function user(state = initState, action) {
       return {...state, msg: '', redirectTo: getRedirectPath(action.payload), isAuth: true, ...action.payload}
     case LOGIN_SUCCESS:
       return {...state, msg: '', redirectTo: getRedirectPath(action.payload), isAuth: true, ...action.payload}
+    case INFO_SUCCESS:
+      return {...state,isAuth: true, ...action.payload}
     case ERROR_MDG:
       return {...state, msg: action.msg, isAuth: false}
     default:
@@ -39,6 +42,10 @@ function errorMsg(msg) {
 }
 function loginSuccess(data) {
   return {type: LOGIN_SUCCESS, payload: data}
+}
+export function loadData(data) {
+  console.log(data)
+  return {type: INFO_SUCCESS, payload: data}
 }
 export function register({user, pwd, repeatpwd, type}) {
   if(!user || !pwd || !type){
