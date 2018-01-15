@@ -2,15 +2,12 @@ import axios from 'axios'
 import { getRedirectPath } from "../util/util"
 import {Toast} from 'antd-mobile'
 
-const REGISTER_SUCCESS = 'REGISTER_SUCCESS'
-const LOGIN_SUCCESS = 'LOGIN_SUCCESS'
+const AUTH_SUCCESS = 'AUTH_SUCCESS'
 const INFO_SUCCESS = 'INFO_SUCCESS'
 const ERROR_MDG = 'ERROR_MDG'
 const initState = {
   // 页面跳转路径
   redirectTo: '',
-  // 是否登录
-  isAuth: false,
   // 用户信息
   user: '',
   pwd: '',
@@ -19,10 +16,8 @@ const initState = {
 // reducer
 export function user(state = initState, action) {
   switch (action.type){
-    case REGISTER_SUCCESS:
-      return {...state, msg: '', redirectTo: getRedirectPath(action.payload), isAuth: true, ...action.payload}
-    case LOGIN_SUCCESS:
-      return {...state, msg: '', redirectTo: getRedirectPath(action.payload), isAuth: true, ...action.payload}
+    case AUTH_SUCCESS:
+      return {...state, msg: '', redirectTo: getRedirectPath(action.payload), ...action.payload}
     case INFO_SUCCESS:
       return {...state,isAuth: true, ...action.payload}
     case ERROR_MDG:
@@ -32,21 +27,19 @@ export function user(state = initState, action) {
   }
 }
 
-function registerSuccess(data) {
-  return {type: REGISTER_SUCCESS, payload: data}
+function authSuccess(data) {
+  return {type: AUTH_SUCCESS, payload: data}
 }
 function errorMsg(msg) {
   // 提示错误信息
   Toast.info(msg, 2)
   return {msg, type: ERROR_MDG}
 }
-function loginSuccess(data) {
-  return {type: LOGIN_SUCCESS, payload: data}
-}
+/** cookie **/
 export function loadData(data) {
-  console.log(data)
   return {type: INFO_SUCCESS, payload: data}
 }
+/** 用户注册 **/
 export function register({user, pwd, repeatpwd, type}) {
   if(!user || !pwd || !type){
     return errorMsg('用户名和密码不能为空')
@@ -57,13 +50,14 @@ export function register({user, pwd, repeatpwd, type}) {
   return dispatch =>{
     axios.post('/user/register', {user, pwd, type}).then(res=>{
       if(res.status === 200 && res.data.code === 0){
-        dispatch(registerSuccess({user, pwd, type}))
+        dispatch(authSuccess({user, pwd, type}))
       }else {
         dispatch(errorMsg(res.data.msg))
       }
     })
   }
 }
+/** 用户登录 **/
 export function login({user, pwd}) {
   if(!user || !pwd ){
     return errorMsg('用户名和密码不能为空')
@@ -71,7 +65,22 @@ export function login({user, pwd}) {
   return dispatch =>{
     axios.post('/user/login', {user, pwd}).then(res=>{
       if(res.status === 200 && res.data.code === 0){
-        dispatch(loginSuccess(res.data.data))
+        dispatch(authSuccess(res.data.data))
+      }else {
+        dispatch(errorMsg(res.data.msg))
+      }
+    })
+  }
+}
+/** boss完善信息 **/
+export function update({title, company, money, desc, avatar}) {
+  if(!title || !company || !money || !desc || !avatar){
+    return errorMsg('请完善信息')
+  }
+  return dispatch =>{
+    axios.post('/user/update', {title, company, money, desc, avatar}).then(res=>{
+      if(res.status === 200 && res.data.code === 0){
+        dispatch(authSuccess(res.data.data))
       }else {
         dispatch(errorMsg(res.data.msg))
       }

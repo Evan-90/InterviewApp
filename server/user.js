@@ -43,6 +43,7 @@ Router.post('/register', function (req, res) {
     })
   })
 })
+/** cookie**/
 Router.get('/info', function (req, res) {
   const { userid } = req.cookies
   if(!userid) {
@@ -53,6 +54,26 @@ Router.get('/info', function (req, res) {
       return res.json({code: 1, msg: '服务器出错'})
     }
     if(data){
+      return res.json({code: 0, data})
+    }
+  })
+})
+/** 用户完善信息**/
+Router.post('/update', function (req, res) {
+  const { userid } = req.cookies
+  const body = req.body
+  if(!userid) {
+    return res.json({code: 1})
+  }
+  User.findByIdAndUpdate( userid, body, function (err, d) {
+    if (err){
+      return res.json({code: 1, msg: '服务器出错'})
+    }
+    if(d){
+      const data = Object.assign({},{
+        user: d.user,
+        type: d.type
+      },body)
       return res.json({code: 0, data})
     }
   })
