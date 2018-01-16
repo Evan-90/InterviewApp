@@ -20,7 +20,7 @@ class GeniusInfo extends React.Component{
       [key]: value
     })
   }
-  avatarSelector(text){
+  avatarSelector = (text) => {
     this.setState({
       avatar: text
     })

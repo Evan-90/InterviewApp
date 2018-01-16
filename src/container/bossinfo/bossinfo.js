@@ -16,14 +16,13 @@ class bossInfo extends React.Component{
       desc: '',
       avatar: ''
     }
-    this.avatarSelector = this.avatarSelector.bind(this)
   }
   handleChange(key, value){
     this.setState({
       [key]: value
     })
   }
-  avatarSelector(text){
+  avatarSelector = (text) => {
     this.setState({
       avatar: text
     })

@@ -13,10 +13,8 @@ class Login extends React.Component{
       user: '',
       pwd: ''
     }
-    this.login = this.login.bind(this)
-    this.register = this.register.bind(this)
   }
-  register() {
+  register = () => {
     this.props.history.push('/register')
   }
   handleChange(key, v) {
@@ -24,7 +22,7 @@ class Login extends React.Component{
       [key]: v
     })
   }
-  login(){
+  login = () => {
     this.props.login(this.state)
   }
   render() {
