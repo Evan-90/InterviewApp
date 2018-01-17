@@ -2,7 +2,6 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { TabBar, Icon } from 'antd-mobile'
 import { withRouter } from 'react-router-dom'
-import './navlink.css'
 
 @withRouter
 class NavLinkBar extends React.Component{
@@ -18,7 +17,7 @@ class NavLinkBar extends React.Component{
           {navList.map(v => (
             <TabBar.Item
               key={v.path}
-              title={v.title}
+              title={v.text}
               icon={<Icon type="check"/>}
               selectedIcon={<Icon type="check-circle"/>}
               selected={pathname === v.path}
