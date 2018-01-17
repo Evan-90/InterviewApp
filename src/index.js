@@ -12,21 +12,27 @@ import Register from "./container/register/register"
 import AuthRoute from "./component/authRoute/authRoute"
 import BossInfo from "./container/bossinfo/bossinfo";
 import GeniusInfo from "./container/geniusinfo/geniusinfo";
+import Dashboard from "./component/dashboard/dashboard";
 
 const store = createStore(reducers, compose(
   applyMiddleware(thunk),
   window.devToolsExtension?window.devToolsExtension():f=>f
 ))
-
+function Boss() {
+  return <h2>Boss</h2>
+}
 ReactDom.render(
   (<Provider store={store}>
     <BrowserRouter>
       <div>
         <AuthRoute/>
-        <Route path="/login" component={Login} />
-        <Route path="/register" component={Register} />
-        <Route path="/bossinfo" component={BossInfo} />
-        <Route path="/geniusinfo" component={GeniusInfo} />
+        <Switch>
+          <Route path="/login" component={Login} />
+          <Route path="/register" component={Register} />
+          <Route path="/bossinfo" component={BossInfo} />
+          <Route path="/geniusinfo" component={GeniusInfo} />
+          <Route component={Dashboard} />
+        </Switch>
       </div>
     </BrowserRouter>
     </Provider>),
