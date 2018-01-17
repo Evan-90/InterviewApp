@@ -1,0 +1,13 @@
+.dashboard-navbar{
+    position: fixed;
+    top: 0px;
+    width: 100%;
+}
+.dashboard-con{
+    margin-top: 45px;
+}
+.interview{
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+}

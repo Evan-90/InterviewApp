@@ -7,8 +7,9 @@ const User = model.getModel('user') // 获得user的model
 const _filter = {'pwd': 0}
 /** 获取所有用户列表**/
 Router.get('/list', function (req, res) {
-  User.find({}, function (err, data) {
-    return res.json(data)
+  const { type } = req.query
+  User.find({type}, function (err, data) {
+    return res.json({code:0, data})
   })
 })
 /** 用户登录**/

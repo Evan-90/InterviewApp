@@ -13,6 +13,7 @@ import AuthRoute from "./component/authRoute/authRoute"
 import BossInfo from "./container/bossinfo/bossinfo";
 import GeniusInfo from "./container/geniusinfo/geniusinfo";
 import Dashboard from "./component/dashboard/dashboard";
+import './index.css';
 
 const store = createStore(reducers, compose(
   applyMiddleware(thunk),
