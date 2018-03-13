@@ -1,6 +1,4 @@
 import axios from 'axios'
-import { getRedirectPath } from "../util/util"
-import {Toast} from 'antd-mobile'
 
 const USER_LIST = 'USER_LIST'
 const initState = {

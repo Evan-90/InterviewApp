@@ -4,22 +4,18 @@ import {NavBar} from 'antd-mobile'
 import { Switch, Route } from 'react-router-dom'
 import NavLinkBar from "../navlink/navlink";
 import Boss from '../boss/boss'
-function Genius() {
-  return <h2>genius page</h2>
-}
-function Msg() {
-  return <h2>消息页面</h2>
-}
-function User() {
-  return <h2>个人中心</h2>
-}
+import Genius from '../genius/genius'
+import User from '../user/user'
+import Msg from "../../container/chat/chat";
+
+
 @connect(
   state=>state
 )
 class Dashboard extends React.Component{
-  constructor(props){
-    super(props)
-  }
+  // constructor(props){
+  //   super(props)
+  // }
   render() {
     const {pathname} = this.props.location
     const user = this.props.user
