@@ -4,6 +4,7 @@ const Router = express.Router()
 
 const model = require('./model') // 读取所有model
 const User = model.getModel('user') // 获得user的model
+const Chat = model.getModel('chat') // 获得chat的model
 const _filter = {'pwd': 0}
 /** 获取所有用户列表**/
 Router.get('/list', function (req, res) {
@@ -76,6 +77,23 @@ Router.post('/update', function (req, res) {
         type: d.type
       },body)
       return res.json({code: 0, data})
+    }
+  })
+})
+/** 聊天模块**/
+Router.get('/getmsglist', function (req, res) {
+  const user = req.cookies.userid
+  User.find({}, function (err, doc) {
+    if(!err){
+      const users = {}
+      doc.forEach(v=>{
+        users[v._id]= {name: v.user, avatar: v.avatar}
+      })
+      Chat.find({'$or':[{from: user},{to: user}]}, function (err, doc) {
+        if(!err) {
+          return res.json({code: 0, msg: doc, users})
+        }
+      })
     }
   })
 })

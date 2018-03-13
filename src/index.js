@@ -29,7 +29,7 @@ ReactDom.render(
           <Route path="/login" component={Login} />
           <Route path="/register" component={Register} />
           <Route path="/bossinfo" component={BossInfo} />
-          <Route path="/chat" component={Chat} />
+          <Route path="/chat/:user" component={Chat} />
           <Route path="/geniusinfo" component={GeniusInfo} />
           <Route component={Dashboard} />
         </Switch>
