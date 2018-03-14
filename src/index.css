@@ -27,6 +27,12 @@
     padding-left: 15px;
     text-align: right;
 }
+#chat-page .am-gride-icon{
+    display: none;
+}
+#chat-page .am-gride-text{
+    margin-top: 0;
+}
 .stick-footer{
     z-index: 10;
     position: absolute;
